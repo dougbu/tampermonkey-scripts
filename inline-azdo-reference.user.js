@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         Inline AzDo Issue
-// @namespace    http://dot.net/
-// @version      0.1
+// @namespace    https://dot.net/
+// @version      0.2
 // @description  Inline AzDO titles and descriptions for linked GitHub issues
-// @author       You
+// @author       Chad Nedzlek
 // @match        https://github.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=github.com
 // @grant        GM_xmlhttpRequest
@@ -59,7 +59,7 @@
                 const titleElement = document.getElementsByClassName("js-issue-title")[0];
                 titleElement.innerText = title;
                 titleElement.innerHTML = "&#10024;" + titleElement.innerHTML;
-                descElement.parentElement.insertAdjacentHTML("afterend", '<tr class="d-block"><td class="d-block" style="border:solid 1px darkgrey; background: #E7E7E7; overflow: auto">' + description + '</td></tr>');
+                descElement.parentElement.insertAdjacentHTML("afterend", '<tr class="d-block"><td class="d-block" style="border-top:solid 1px var(--color-border-subtle); background: var(--color-canvas-subtle); color: var(--color-fg-default); overflow: auto">' + description + '</td></tr>');
             }
         });
     }
@@ -134,7 +134,7 @@
                 onload: function(response) {
                     const value = JSON.parse(response.responseText);
                     const description = value.fields["System.Description"];
-                    desc.insertAdjacentHTML("afterend", '<div style="border:solid 1px darkgrey; background: #E7E7E7; overflow: auto">' + description + '</div>');
+                    desc.insertAdjacentHTML("afterend", '<div style="border-top:solid 1px var(--color-border-subtle); background: var(--color-canvas-subtle); color: var(--color-fg-default); overflow: auto">' + description + '</div>');
                 }
             });
         }
