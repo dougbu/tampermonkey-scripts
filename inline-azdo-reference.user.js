@@ -142,10 +142,10 @@
     }
 
     function updateProjectBoard() {
-        if (!document.querySelector("[data-test-id='table-root']") && !document.querySelector("[data-test-id='board-view']")) {
+        if (!document.querySelector("[data-testid='table-root']") && !document.querySelector("[data-testid='board-view']")) {
             return;
         }
-        if (document.querySelector("[data-test-id='side-panel']")) {
+        if (document.querySelector("[data-testid='side-panel']")) {
             updateSidePanel();
         } else {
         }
