@@ -106,15 +106,15 @@
     }
 
     function updateSidePanel() {
-        let sidePanel = document.querySelector("[data-test-id='side-panel']");
+        let sidePanel = document.querySelector("[data-testid='side-panel']");
         if (sidePanel.chadnedzAzdoRan) {
             return;
         }
-        let title = sidePanel.querySelector("[data-test-id='side-panel-title'] a");
+        let title = sidePanel.querySelector("[data-testid='side-panel-title'] a");
         if (!title) {
             return;
         }
-        let desc = sidePanel.querySelector("[data-test-id='comment-body']");
+        let desc = sidePanel.querySelector("[data-testid='comment-body']");
         function getId() {
             const links = desc.getElementsByTagName("a");
             for(const l of links) {
@@ -142,10 +142,10 @@
     }
 
     function updateProjectBoard() {
-        if (!document.querySelector("[data-test-id='table-root']") && !document.querySelector("[data-test-id='board-view']")) {
+        if (!document.querySelector("[data-testid='table-root']") && !document.querySelector("[data-testid='board-view']")) {
             return;
         }
-        if (document.querySelector("[data-test-id='side-panel']")) {
+        if (document.querySelector("[data-testid='side-panel']")) {
             updateSidePanel();
         } else {
         }
