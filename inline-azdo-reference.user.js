@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Inline AzDo Issue
 // @namespace    https://dot.net/
-// @version      0.2
+// @version      0.3
 // @description  Inline AzDO titles and descriptions for linked GitHub issues
 // @author       Chad Nedzlek
 // @match        https://github.com/*
