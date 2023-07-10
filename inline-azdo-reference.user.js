@@ -16,9 +16,9 @@
 
     function handleUpdate(mutationList) {
         stopObservation();
-        if(window.location.href.match(/^https:\/\/github\.com\/dotnet\/arcade\/issues\/(\d+)$/)) {
+        if(window.location.href.match(/^https:\/\/github\.com\/dotnet\/(arcade|dnceng)\/issues\/(\d+)$/)) {
             handleSingleIssue();
-        } else if (window.location.href.match(/^https:\/\/github\.com\/dotnet\/arcade\/issues($|\?)/)) {
+        } else if (window.location.href.match(/^https:\/\/github\.com\/dotnet\/(arcade|dnceng)\/issues($|\?)/)) {
             updateIssueList();
         } else if (window.location.href.match(/^https:\/\/github\.com\/orgs\/dotnet\/projects\/86\/views/)) {
             updateProjectBoard();
