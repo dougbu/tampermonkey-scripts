@@ -16,11 +16,11 @@
 
     function handleUpdate(mutationList) {
         stopObservation();
-        if(window.location.href.match(/^https:\/\/github\.com\/dotnet\/(arcade|dnceng)\/issues\/(\d+)$/)) {
+        if (window.location.href.match(/^https:\/\/github\.com\/dotnet\/(arcade|dnceng|arcade-services)\/issues\/(\d+)$/)) {
             handleSingleIssue();
-        } else if (window.location.href.match(/^https:\/\/github\.com\/dotnet\/(arcade|dnceng)\/issues($|\?)/)) {
+        } else if (window.location.href.match(/^https:\/\/github\.com\/dotnet\/(arcade|dnceng|arcade-services)\/issues($|\?)/)) {
             updateIssueList();
-        } else if (window.location.href.match(/^https:\/\/github\.com\/orgs\/dotnet\/projects\/86\/views/)) {
+        } else if (window.location.href.match(/^https:\/\/github\.com\/orgs\/dotnet\/projects\/(86|276)\/views/)) {
             updateProjectBoard();
         }
         startObservation();
