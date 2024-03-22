@@ -22,6 +22,8 @@
             updateIssueList();
         } else if (window.location.href.match(/^https:\/\/github\.com\/orgs\/dotnet\/projects\/(86|276)\/views/)) {
             updateProjectBoard();
+        } else if (window.location.href.match(/^https:\/\/github\.com\/dotnet\/(arcade|dnceng|arcade-services)\/milestone\/(\d+)$/)) {
+            updateMilestoneView();
         }
         startObservation();
     }
@@ -85,7 +87,7 @@
                         url: `https://api.github.com/repos/${linkMatch[1]}/${linkMatch[2]}/issues/${linkMatch[3]}`,
                         onload: function(response) {
                             const issueBody = JSON.parse(response.responseText).body;
-                            const m = issueBody.match(/\[.*\]\(https:\/\/dev.azure.com\/(\w+)\/([0-9a-z-]+)\/_workitems\/edit\/(\d+)\)/);
+                            const m = issueBody.match(/https:\/\/dev.azure.com\/(\w+)\/([0-9a-z-]+)\/_workitems\/edit\/(\d+)/);
                             if (m) {
                                 GM_xmlhttpRequest({
                                     method:"GET",
@@ -162,7 +164,47 @@
                         url: `https://api.github.com/repos/${linkMatch[1]}/${linkMatch[2]}/issues/${linkMatch[3]}`,
                         onload: function(response) {
                             const issueBody = JSON.parse(response.responseText).body;
-                            const m = issueBody.match(/\[.*\]\(https:\/\/dev.azure.com\/(\w+)\/([0-9a-z-]+)\/_workitems\/edit\/(\d+)\)/);
+                            const m = issueBody.match(/https:\/\/dev.azure.com\/(\w+)\/([0-9a-z-]+)\/_workitems\/edit\/(\d+)/);
+                            if (m) {
+                                GM_xmlhttpRequest({
+                                    method:"GET",
+                                    url: `https://dev.azure.com/${m[1]}/${m[2]}/_apis/wit/workitems/${m[3]}?api-version=6.0`,
+                                    onload: function(response) {
+                                        const value = JSON.parse(response.responseText);
+                                        const title = value.fields["System.Title"];
+                                        e.innerText = title;
+                                        e.innerHTML = "&#10024;" + e.innerHTML;
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+            }
+        }
+    }
+
+    function updateMilestoneView() {
+        const allIssues = document.getElementsByClassName("js-issue-row");
+        if (!allIssues) {
+            return;
+        }
+        for(var issueElement of allIssues) {
+            if (issueElement.chadnedzAzdoRan) {
+                continue;
+            }
+            issueElement.chadnedzAzdoRan = true;
+            const e = issueElement.getElementsByClassName("markdown-title")[0];
+            if (e.innerText.match(/AzDO Issue #(\d+)/i)) {
+                e.innerHTML = "&#8987;" + e.innerHTML;
+                const linkMatch = e.href.match(/https:\/\/github\.com\/(\w+)\/(\w+)\/issues\/(\d+)/);
+                if (linkMatch) {
+                    GM_xmlhttpRequest({
+                        method:"GET",
+                        url: `https://api.github.com/repos/${linkMatch[1]}/${linkMatch[2]}/issues/${linkMatch[3]}`,
+                        onload: function(response) {
+                            const issueBody = JSON.parse(response.responseText).body;
+                            const m = issueBody.match(/https:\/\/dev.azure.com\/(\w+)\/([0-9a-z-]+)\/_workitems\/edit\/(\d+)/);
                             if (m) {
                                 GM_xmlhttpRequest({
                                     method:"GET",
